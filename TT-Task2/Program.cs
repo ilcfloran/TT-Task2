@@ -1,5 +1,4 @@
 ﻿using System;
-using TT_Task2.Models;
 
 namespace TT_Task2
 {
@@ -9,19 +8,34 @@ namespace TT_Task2
         {
             System.Console.WriteLine("Program Started");
             System.Console.WriteLine("**********************");
+            Console.WriteLine("Press blah to exit the program.");
 
-            RootObject result = new RootObject();
-            try
+            //TO DO: implement exiting the loop
+            while (true)
             {
-                Service service = new TT_Task2.Service();
-                // call another helper to map to the Person
-                service.callingAsync().Wait();
-            }
-            catch (Exception)
-            {
-                System.Console.WriteLine("failed attempt");
-            }
+                Console.WriteLine("Please enter an email to search: ");
+                var emailInput = Console.ReadLine();
 
+                EmailValidatorHelper emailValidatorHelper = new EmailValidatorHelper();
+
+                if (emailValidatorHelper.IsValidEmail(emailInput))
+                {
+                    try
+                    {
+                        var apiCallHelper = new ApiCallHelper();
+                        apiCallHelper.ContactApiCallerAsync(emailInput).Wait();
+                    }
+                    catch (Exception)
+                    {
+                        System.Console.WriteLine("failed attempt");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Please enter a valid email address and try again.");
+                    continue;
+                }
+            }
             Console.ReadLine();
         }
 
