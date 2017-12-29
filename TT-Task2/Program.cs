@@ -25,6 +25,5 @@ namespace TT_Task2
             Console.ReadLine();
         }
 
-
     }
 }
